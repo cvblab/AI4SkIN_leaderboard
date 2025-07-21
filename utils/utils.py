@@ -46,7 +46,7 @@ def plot_confmx(conf_matrix, run_name, model, encoder):
     plt.savefig(os.path.join(path_save, f"cfmx_{run_name}.png"))
 
 def load_data(folder, feature_extractor):
-    dataframe = pd.read_excel("AI4SkIN.xlsx")
+    dataframe = pd.read_excel("AI4SkIN_df.xlsx")
     list_WSI = dataframe['WSI'].values
     labels = dataframe['GT'].values
     patients = dataframe['patient'].values

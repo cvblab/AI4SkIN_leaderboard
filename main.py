@@ -13,9 +13,9 @@ from utils.trainer import train_model, validate_model
 from utils.utils import set_random_seeds, plot_confmx, load_data, plot_figures, get_fmsi
 
 parser = argparse.ArgumentParser(description="AI4SkIN leaderboard")
-parser.add_argument('--folder', type=str,)
-parser.add_argument('--encoder', type=str, choices = ["UNI", "CONCH"])
-parser.add_argument('--model', type=str, default = None, choices = ["ABMIL", "MISimpleShot"])
+parser.add_argument('--folder', type=str)
+parser.add_argument('--encoder', type=str, choices=["UNI", "CONCH"])
+parser.add_argument('--model', type=str, default=None, choices=["ABMIL", "MISimpleShot"])
 parser.add_argument('--get_fmsi', action='store_true')
 parser.add_argument('--lr', type=float, default=1e-4)
 parser.add_argument('--k_folds', type=int, default=5)

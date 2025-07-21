@@ -62,5 +62,5 @@ python main.py --folder <folder> --encoder <CONCH/UNI> --get-fmsi
 ### To-do list
 
 - [ ] Share embeddings of other foundation models
-- - [ ] Implement other MIL models (TransMIL)
+- [ ] Implement other MIL models (TransMIL)
 - [ ] Provide comparison of FM-SI with Robustness Index (RI)
