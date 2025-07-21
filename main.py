@@ -14,7 +14,7 @@ from utils.utils import set_random_seeds, plot_confmx, load_data, plot_figures, 
 
 parser = argparse.ArgumentParser(description="AI4SkIN leaderboard")
 parser.add_argument('--folder', type=str,)
-parser.add_argument('--encoder', type=str, default = "CONCH")
+parser.add_argument('--encoder', type=str, choices = ["UNI", "CONCH"])
 parser.add_argument('--model', type=str, default = None, choices = ["ABMIL", "MISimpleShot"])
 parser.add_argument('--get_fmsi', action='store_true')
 parser.add_argument('--lr', type=float, default=1e-4)
@@ -25,8 +25,6 @@ args = parser.parse_args()
 
 set_random_seeds(seed_value=args.seed)  # Reproducibility
 
-run_name = args.model + "_" + args.encoder # Run name definition
-
 # Data loading
 X, Y, WSI, patients, centers = load_data(feature_extractor=args.encoder, folder=args.folder)
 n_classes = len(np.unique(Y)) # Number of classes
@@ -34,6 +32,8 @@ L = X[0].shape[-1] # Latent space length
 
 # Calculate FM-SI: Foundation Model - Silhoutte Index
 get_fmsi(X,centers,args.encoder) if args.get_fmsi else None
+
+run_name = args.model + "_" + args.encoder # Run name definition
 
 # Data partitioning (patient-level stratified k-fold cross validation)
 kf = StratifiedGroupKFold(n_splits=args.k_folds, shuffle=True, random_state=args.seed)

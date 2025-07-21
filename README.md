@@ -16,6 +16,7 @@ The table provides the classification performance in terms of balanced accuracy 
 | Foundation Model                                    | [ABMIL](https://proceedings.mlr.press/v80/ilse18a.html) | [MI-SimpleShot](https://doi.org/10.1038/s41591-024-02857-3) | [FM-SI](https://doi.org/10.1007/978-3-031-98688-8_2) |
 |-----------------------------------------------------|---------------------------------------------------------|-------------------------------------------------------------|------------------------------------------------------|
 | [CONCH](https://doi.org/10.1038/s41591-024-02856-4) | 85.17%                                                  | 72.37%                                                      | 0.0934                                               |
+| [UNI](https://doi.org/10.1038/s41591-024-02857-3)   | 82.51%                                                  | 68.28%                                                      | 0.5867                                               |
 
 
 
@@ -45,7 +46,7 @@ From [this link](https://upvedues-my.sharepoint.com/:f:/g/personal/pabmees_upv_e
 
 Run weakly supervised classification based on multiple instance learning (MIL) for skin cancer subtyping. We implement attention-based MIL and MI-SimpleShot.
 ```
-python main.py --folder <folder> --encoder CONCH --scenario <ABMIL/MISimpleShot>
+python main.py --folder <folder> --encoder <CONCH/UNI> --scenario <ABMIL/MISimpleShot>
 ```
 
 * FM-SI: Foundation Model - Silhouette Index
@@ -55,11 +56,11 @@ We proposed the Foundation Model - Silhouette Index (FM-SI) to assess the model 
 To plot 2D t-SNE and get the FM-SI, you just need to add the corresponding flag to the execution. Script will not run the classification. 
 
 ```
-python main.py --folder <folder> --encoder CONCH --get-fmsi
+python main.py --folder <folder> --encoder <CONCH/UNI> --get-fmsi
 ```
 
 ### To-do list
 
 - [ ] Share embeddings of other foundation models
+- - [ ] Implement other MIL models (TransMIL)
 - [ ] Provide comparison of FM-SI with Robustness Index (RI)
-- [ ] Implement other MIL models (TransMIL)
