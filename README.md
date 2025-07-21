@@ -44,7 +44,7 @@ From [this link](https://upvedues-my.sharepoint.com/:f:/g/personal/pabmees_upv_e
 
 * Weakly supervised classification 
 
-Run weakly supervised classification based on multiple instance learning (MIL) for skin cancer subtyping. We implement attention-based MIL and MI-SimpleShot.
+Run weakly supervised classification based on multiple instance learning (MIL) for skin cancer subtyping. We implement attention-based MIL and MI-SimpleShot. The folder argument should point to the directory containing subfolders named as each FM.
 ```
 python main.py --folder <folder> --encoder <CONCH/UNI> --scenario <ABMIL/MISimpleShot>
 ```
@@ -56,7 +56,7 @@ We proposed the Foundation Model - Silhouette Index (FM-SI) to assess the model 
 To plot 2D t-SNE and get the FM-SI, you just need to add the corresponding flag to the execution. Script will not run the classification. 
 
 ```
-python main.py --folder <folder> --encoder <CONCH/UNI> --get-fmsi
+python main.py --folder <folder> --encoder <CONCH/UNI> --get_fmsi
 ```
 
 ### To-do list
