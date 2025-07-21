@@ -33,9 +33,7 @@ n_classes = len(np.unique(Y)) # Number of classes
 L = X[0].shape[-1] # Latent space length
 
 # Calculate FM-SI: Foundation Model - Silhoutte Index
-if args.get_fmsi:
-    get_fmsi(X,centers,args.encoder)
-    exit()
+get_fmsi(X,centers,args.encoder) if args.get_fmsi else None
 
 # Data partitioning (patient-level stratified k-fold cross validation)
 kf = StratifiedGroupKFold(n_splits=args.k_folds, shuffle=True, random_state=args.seed)

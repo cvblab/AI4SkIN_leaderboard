@@ -79,6 +79,7 @@ def get_fmsi(X, centers, encoder):
     path_save = os.path.join("./local_data/tsne/")
     os.makedirs(path_save, exist_ok=True)
     plt.savefig(os.path.join(path_save, f"tsne_{encoder}.png"))
+    exit()
 
 def set_random_seeds(seed_value=42):
     # Set seed for NumPy

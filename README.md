@@ -8,12 +8,19 @@
 
 ## AI4SKIN leaderboard
 
-Classification performance in terms of balanced accuracy (BACC) for each combination of foundation model and multiple instance learning classifier. We also provide the Foundation Model - Silhouette Index (FM-SI) to measure model robustness against distribution shifts.  
+In this work, we provide an extensive evaluation of histopathology foundation models in a benchmark for skin cancer subtyping on whole slide images (WSI) from the multi-center [AI4SKIN dataset](https://doi.org/10.1038/s41597-025-05108-3).
 
-| Foundation Model | ABMIL [2] | MI-SimpleShot [3] | FM-SI [ours] |
-|------------------|-----------|-------------------|--------------|
-| CONCH [FM1]      | 85.17%    | 72.37%            | 0.0934       |
+The table provides the classification performance in terms of balanced accuracy (BACC) for each combination of foundation model and multiple instance learning classifier. We also provide the Foundation Model - Silhouette Index (FM-SI) to measure model robustness against distribution shifts.
 
+
+| Foundation Model                                    | [ABMIL](https://proceedings.mlr.press/v80/ilse18a.html) | [MI-SimpleShot](https://doi.org/10.1038/s41591-024-02857-3) | [FM-SI](https://doi.org/10.1007/978-3-031-98688-8_2) |
+|-----------------------------------------------------|---------------------------------------------------------|-------------------------------------------------------------|------------------------------------------------------|
+| [CONCH](https://doi.org/10.1038/s41591-024-02856-4) | 85.17%                                                  | 72.37%                                                      | 0.0934                                               |
+
+
+
+> **Note**  
+> Results may vary from those presented in the paper as this repository uses the final version of the dataset containing 626 slides. We do not rely on the official partitions of the dataset as we used a patient-stratified 5-fold cross-validation. 
 
 ### Setting up AI4SKIN leaderboard
 
@@ -30,21 +37,20 @@ pip install -r requirements.txt
 
 * Data downloading for reproducibility
 
-The proposed benchmark for benchamrking foundation models is based on the AI4SKIN dataset. The dataset includes whole slide images (WSI) of cutaneous spindle cell neoplasms (CSC) for skin cancer subtyping. Dataset details are provided in the [Scientific Data manuscript](https://doi.org/10.1038/s41597-025-05108-3) and WSIs are publicly available in [Figshare](https://doi.org/10.6084/m9.figshare.27118035) [1].
+The proposed benchmark for benchamrking foundation models is based on the AI4SKIN dataset. The dataset includes whole slide images (WSI) of cutaneous spindle cell neoplasms (CSC) for skin cancer subtyping. Dataset details are provided in the [Scientific Data manuscript](https://doi.org/10.1038/s41597-025-05108-3) and WSIs are publicly available in [Figshare](https://doi.org/10.6084/m9.figshare.27118035).
 
-From [this link](https://upvedues-my.sharepoint.com/:f:/g/personal/pabmees_upv_edu_es/EnVgZJtckMdJoPvDnqd3REUB_Oany7p6zFlQIwm3MQBLow?e=Mr8Sfg), you can manually download the files including the embeddings extracted with the corresponding foundation model. Each `.npy` file contain Nxd matrix where N denotes the number of patches in the slide and L the dimension of the instance-level features. We include at the moment the embeddings extracted with CONCH [FM1] and we plan to extend it to the other FM soon. 
+From [this link](https://upvedues-my.sharepoint.com/:f:/g/personal/pabmees_upv_edu_es/EnVgZJtckMdJoPvDnqd3REUB_Oany7p6zFlQIwm3MQBLow?e=Mr8Sfg), you can manually download the files including the embeddings extracted with the corresponding foundation model. Each `.npy` file contain Nxd matrix where N denotes the number of patches in the slide and L the dimension of the instance-level features. We include at the moment the embeddings extracted with CONCH and we plan to extend it to the other FM soon. 
 
 * Weakly supervised classification 
 
-Run weakly supervised classification based on multiple instance learning (MIL) for skin cancer subtyping. We implement attention-based MIL [2] and MI-SimpleShot [3]. In a near future, we are planning to extend the benchmarking to other MIL models. 
-
+Run weakly supervised classification based on multiple instance learning (MIL) for skin cancer subtyping. We implement attention-based MIL and MI-SimpleShot.
 ```
 python main.py --folder <folder> --encoder CONCH --scenario <ABMIL/MISimpleShot>
 ```
 
 * FM-SI: Foundation Model - Silhouette Index
 
-We proposed the Foundation Model - Silhouette Index (FM-SI) to assess the model robustness against distribution shifts in terms of digitization scanner. FM-SI is based on t-SNE [4] dimensionality reduction and silhouette coefficients [5]. It measures FM robustess at the slide-level without requiring class labels.
+We proposed the Foundation Model - Silhouette Index (FM-SI) to assess the model robustness against distribution shifts in terms of digitization scanner. FM-SI is based on t-SNE  dimensionality reduction and silhouette coefficients . It measures FM robustess at the slide-level without requiring class labels.
 
 To plot 2D t-SNE and get the FM-SI, you just need to add the corresponding flag to the execution. Script will not run the classification. 
 
@@ -55,26 +61,5 @@ python main.py --folder <folder> --encoder CONCH --get-fmsi
 ### To-do list
 
 - [ ] Share embeddings of other foundation models
-- [ ] Provide comparison of FM-SI with Robustness Index (RI) [6]
-- [ ] Implement other MIL models (TransMIL [7])
-
-
-### References
-
-[1a] Del Amor, R., López-Pérez, M., Meseguer, P., Morales, S., Terradez, L., Aneiros-Fernandez, J., ... & Naranjo, V. (2025). A fusocelular skin dataset with whole slide images for deep learning models. Scientific Data, 12(1), 788.
-
-[1b] Meseguer, Pablo; Terrádez, Liria; del Amor, Rocío; Naranjo, Valery; López-Pérez, Miguel; Aneiros-Fernández, José; et al. (2025). A Fusocelular Skin Dataset with Whole Slide Images for Deep Learning Models. figshare.
-
-[2] Ilse, M., Tomczak, J., & Welling, M. (2018, July). Attention-based deep multiple instance learning. In International conference on machine learning (pp. 2127-2136). PMLR.
-
-[3] Chen, R. J., Ding, T., Lu, M. Y., Williamson, D. F., Jaume, G., Song, A. H., ... & Mahmood, F. (2024). Towards a general-purpose foundation model for computational pathology. Nature medicine, 30(3), 850-862.
-
-[4] Maaten, L. V. D., & Hinton, G. (2008). Visualizing data using t-SNE. Journal of machine learning research, 9(Nov), 2579-2605.
-
-[5] Rousseeuw, P. J. (1987). Silhouettes: a graphical aid to the interpretation and validation of cluster analysis. Journal of computational and applied mathematics, 20, 53-65.
-
-[6] de Jong, E. D., Marcus, E., & Teuwen, J. (2025). Current pathology foundation models are unrobust to medical center differences. arXiv preprint arXiv:2501.18055.
-
-[7] Shao, Z., Bian, H., Chen, Y., Wang, Y., Zhang, J., & Ji, X. (2021). Transmil: Transformer based correlated multiple instance learning for whole slide image classification. Advances in neural information processing systems, 34, 2136-2147.
-
-[FM1] Lu, M. Y., Chen, B., Williamson, D. F., Chen, R. J., Liang, I., Ding, T., ... & Mahmood, F. (2024). A visual-language foundation model for computational pathology. Nature medicine, 30(3), 863-874.
+- [ ] Provide comparison of FM-SI with Robustness Index (RI)
+- [ ] Implement other MIL models (TransMIL)
