@@ -45,14 +45,20 @@ def plot_confmx(conf_matrix, run_name, model, encoder):
     os.makedirs(path_save, exist_ok=True)
     plt.savefig(os.path.join(path_save, f"cfmx_{run_name}.png"))
 
-def load_data(folder, feature_extractor):
+def load_data(folder, encoder):
     dataframe = pd.read_excel("AI4SkIN_df.xlsx")
     list_WSI = dataframe['WSI'].values
     labels = dataframe['GT'].values
     subtypes = dataframe['subtype'].values
     patients = dataframe['patient'].values
     centers = dataframe['center'].values
-    data = [np.load(os.path.join(folder, feature_extractor, file_name + ".npy")) for file_name in tqdm(list_WSI)]
+
+    if not os.path.exists(os.path.join(folder, encoder)):
+        import sys
+        print(f"[ERROR] Encoder {encoder} is not available", file=sys.stderr)
+        sys.exit(1)
+
+    data = [np.load(os.path.join(folder, encoder, file_name + ".npy")) for file_name in tqdm(list_WSI)]
     return data, labels, patients, centers, subtypes
 
 def get_fmsi(X, centers, labels, encoder):

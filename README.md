@@ -14,11 +14,13 @@ In this work, we provide an extensive evaluation of histopathology foundation mo
 The table provides the classification performance (balanced accuracy) for each combination of foundation model and multiple instance learning classifier. We include the Foundation Model - Silhouette Index (FM-SI) to measure model robustness against distribution shifts.
 
 
-| Foundation Model                                    | [ABMIL](https://proceedings.mlr.press/v80/ilse18a.html) ↑ | [MI-SimpleShot](https://doi.org/10.1038/s41591-024-02857-3) ↑ | [FM-SI](https://doi.org/10.1007/978-3-031-98688-8_2) ↓ |
-|-----------------------------------------------------|-----------------------------------------------------------|---------------------------------------------------------------|--------------------------------------------------------|
-| [CONCH](https://doi.org/10.1038/s41591-024-02856-4) | 85.17%                                                    | 72.37%                                                        | 0.0934                                                 |
-| [UNI](https://doi.org/10.1038/s41591-024-02857-3)   | 82.51%                                                    | 68.28%                                                        | 0.5867                                                 |
-| [TITAN](https://doi.org/10.48550/arXiv.2411.19666)  | -                                                         | 83.10%                                                        | 0.0331                                                 |
+| Foundation Model                                       | [ABMIL](https://proceedings.mlr.press/v80/ilse18a.html) ↑ | [MI-SimpleShot](https://doi.org/10.1038/s41591-024-02857-3) ↑ | [FM-SI](https://doi.org/10.1007/978-3-031-98688-8_2) ↓ |
+|--------------------------------------------------------|-----------------------------------------------------------|---------------------------------------------------------------|--------------------------------------------------------|
+| [CONCH](https://doi.org/10.1038/s41591-024-02856-4)    | 85.17%                                                    | 72.37%                                                        | 0.0934                                                 |
+| [KEEP](https://doi.org/10.48550/arXiv.2412.13126)      | 82.01%                                                    | 73.97%                                                        | 0.0617                                                 |
+| [UNI](https://doi.org/10.1038/s41591-024-02857-3)      | 82.51%                                                    | 68.28%                                                        | 0.5867                                                 |
+| [VIRCHOW-2](https://doi.org/10.48550/arXiv.2408.00738) | 86.10%                                                    | 78.91%                                                        | 0.3479                                                 |
+| [TITAN](https://doi.org/10.48550/arXiv.2411.19666)     | -                                                         | 83.10%                                                        | 0.0331                                                 |
 
 
 
@@ -48,7 +50,7 @@ From [this link](https://upvedues-my.sharepoint.com/:f:/g/personal/pabmees_upv_e
 
 Run weakly supervised classification based on multiple instance learning (MIL) for skin cancer subtyping. We implement attention-based MIL and MI-SimpleShot. The folder argument should point to the directory containing subfolders named as each FM.
 ```
-python main.py --folder <folder> --encoder <CONCH/UNI> --scenario <ABMIL/MISimpleShot>
+python main.py --folder <folder> --encoder <encoder> --scenario <ABMIL/MISimpleShot>
 ```
 
 * FM-SI: Foundation Model - Silhouette Index
@@ -58,11 +60,12 @@ We proposed the Foundation Model - Silhouette Index (FM-SI) to assess the model 
 To plot 2D t-SNE and get the FM-SI, you just need to add the corresponding flag to the execution. Script will also plot the visualization with the class labels and will not run the classification. 
 
 ```
-python main.py --folder <folder> --encoder <CONCH/UNI> --get_fmsi
+python main.py --folder <folder> --encoder <encoder> --get-fmsi
 ```
 
 ### To-do list
 
-- [ ] Share embeddings of other foundation models
+- [x] Share embeddings of other foundation models
+- [x] Include slide-level foundation models (TITAN)
 - [ ] Implement other MIL models (TransMIL)
 - [ ] Provide comparison of FM-SI with Robustness Index (RI)
