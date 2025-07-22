@@ -2,8 +2,8 @@
 
 **AI4SKIN Leaderboard**: [Benchmarking Histopathology Foundation Models in a Multi-center Dataset for Skin Cancer Subtyping](https://doi.org/10.1007/978-3-031-98688-8_2)
 
-Publication: 29th UK Conference on Medical Image Understanding and Analysis ([MIUA](https://conferences.leeds.ac.uk/miua/))  
-Authors: [Pablo Meseguer<sup>1</sup>](https://scholar.google.es/citations?user=4r9lgdAAAAAJ&hl=es&oi=ao), [Rocío del Amor<sup>1,2</sup>](https://scholar.google.es/citations?user=CPCZPNkAAAAJ&hl=es&oi=ao), [Valery Naranjo<sup>1,2</sup>](https://scholar.google.com/citations?user=jk4XsG0AAAAJ&hl=es&oi=ao)
+_Publication_: 29th UK Conference on Medical Image Understanding and Analysis ([MIUA](https://conferences.leeds.ac.uk/miua/))  
+_Authors_: [Pablo Meseguer<sup>1</sup>](https://scholar.google.es/citations?user=4r9lgdAAAAAJ&hl=es&oi=ao), [Rocío del Amor<sup>1,2</sup>](https://scholar.google.es/citations?user=CPCZPNkAAAAJ&hl=es&oi=ao), [Valery Naranjo<sup>1,2</sup>](https://scholar.google.com/citations?user=jk4XsG0AAAAJ&hl=es&oi=ao)
 
 <sup>1</sup>[Universitat Politècnica de València (UPV)](https://www.upv.es/)  
 <sup>2</sup>[Artikode Intelligence SL](https://www.artikode.com/)
