@@ -49,31 +49,33 @@ def load_data(folder, feature_extractor):
     dataframe = pd.read_excel("AI4SkIN_df.xlsx")
     list_WSI = dataframe['WSI'].values
     labels = dataframe['GT'].values
+    subtypes = dataframe['subtype'].values
     patients = dataframe['patient'].values
-    center = dataframe['center'].values
+    centers = dataframe['center'].values
     data = [np.load(os.path.join(folder, feature_extractor, file_name + ".npy")) for file_name in tqdm(list_WSI)]
-    return data, labels, list_WSI, patients, center
+    return data, labels, patients, centers, subtypes
 
-def get_fmsi(X, centers, encoder):
+def get_fmsi(X, centers, labels, encoder):
     from sklearn.manifold import TSNE
     from sklearn.metrics import silhouette_score
 
     # Mean pooling and dimensionality reduction
-    X = np.stack([np.mean(X_it, axis=0) for X_it in X])
+    X = np.stack(X) if len(X[0].shape) == 1 else np.stack([np.mean(x, axis=0) for x in X])
     tsne = TSNE(n_components=2, random_state=42)
     X_2D = tsne.fit_transform(X)
 
     # Plot 2D Visualization
-    plt.figure(figsize=(8, 6))
-    for it, center in enumerate(np.unique(centers)):
-        indices = centers == center
-        plt.scatter(X_2D[indices, 0], X_2D[indices, 1], label=center)
-    plt.legend()
-    plt.grid(True)
+    fig, axs = plt.subplots(1, 2, figsize=(12, 6))  # 1 row, 2 columns
+    identifiers = [labels, centers]
+    for ax, labels in zip(axs, identifiers):
+        for label in np.unique(labels):
+            indices = labels == label
+            ax.scatter(X_2D[indices, 0], X_2D[indices, 1], label=str(label))
+        ax.legend()
+        ax.grid(True, zorder=0)
 
-    # Calculate silhouette score
-    fmsi = round(silhouette_score(X_2D, centers), 4)
-    plt.title(f"FM-SI ({encoder}) = {fmsi:.4f}")
+    fmsi = round(silhouette_score(X_2D, centers), 4) # Calculate silhouette score
+    axs[1].set_title(f"FM-SI ({encoder}) = {fmsi:.4f}")
     plt.tight_layout()
 
     path_save = os.path.join("./local_data/tsne/")

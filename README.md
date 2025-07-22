@@ -1,22 +1,24 @@
-# AI4SKIN leaderboard
+# AI4SKIN Leaderboard
 
-[AI4SKIN leaderboard: Benchmarking Histopathology Foundation Models in a Multi-center Dataset for Skin Cancer Subtyping](https://doi.org/10.1007/978-3-031-98688-8_2)
+**AI4SKIN Leaderboard**: [Benchmarking Histopathology Foundation Models in a Multi-center Dataset for Skin Cancer Subtyping](https://doi.org/10.1007/978-3-031-98688-8_2)
 
-[Pablo Meseguer<sup>1</sup>](https://scholar.google.es/citations?user=4r9lgdAAAAAJ&hl=es&oi=ao), [Rocío del Amor<sup>1</sup>](https://scholar.google.es/citations?user=CPCZPNkAAAAJ&hl=es&oi=ao), [Valery Naranjo<sup>1</sup>](https://scholar.google.com/citations?user=jk4XsG0AAAAJ&hl=es&oi=ao)
+Publication: 29th UK Conference on Medical Image Understanding and Analysis ([MIUA](https://conferences.leeds.ac.uk/miua/))  
+Authors: [Pablo Meseguer<sup>1</sup>](https://scholar.google.es/citations?user=4r9lgdAAAAAJ&hl=es&oi=ao), [Rocío del Amor<sup>1,2</sup>](https://scholar.google.es/citations?user=CPCZPNkAAAAJ&hl=es&oi=ao), [Valery Naranjo<sup>1,2</sup>](https://scholar.google.com/citations?user=jk4XsG0AAAAJ&hl=es&oi=ao)
 
-<sup>1</sup>[Universitat Politècnica de València (UPV)](https://www.upv.es/)
+<sup>1</sup>[Universitat Politècnica de València (UPV)](https://www.upv.es/)  
+<sup>2</sup>[Artikode Intelligence SL](https://www.artikode.com/)
 
 ## AI4SKIN leaderboard
 
 In this work, we provide an extensive evaluation of histopathology foundation models in a benchmark for skin cancer subtyping on whole slide images (WSI) from the multi-center [AI4SKIN dataset](https://doi.org/10.1038/s41597-025-05108-3).
+The table provides the classification performance (balanced accuracy) for each combination of foundation model and multiple instance learning classifier. We include the Foundation Model - Silhouette Index (FM-SI) to measure model robustness against distribution shifts.
 
-The table provides the classification performance in terms of balanced accuracy (BACC) for each combination of foundation model and multiple instance learning classifier. We also provide the Foundation Model - Silhouette Index (FM-SI) to measure model robustness against distribution shifts.
 
-
-| Foundation Model                                    | [ABMIL](https://proceedings.mlr.press/v80/ilse18a.html) | [MI-SimpleShot](https://doi.org/10.1038/s41591-024-02857-3) | [FM-SI](https://doi.org/10.1007/978-3-031-98688-8_2) |
-|-----------------------------------------------------|---------------------------------------------------------|-------------------------------------------------------------|------------------------------------------------------|
-| [CONCH](https://doi.org/10.1038/s41591-024-02856-4) | 85.17%                                                  | 72.37%                                                      | 0.0934                                               |
-| [UNI](https://doi.org/10.1038/s41591-024-02857-3)   | 82.51%                                                  | 68.28%                                                      | 0.5867                                               |
+| Foundation Model                                    | [ABMIL](https://proceedings.mlr.press/v80/ilse18a.html) ↑ | [MI-SimpleShot](https://doi.org/10.1038/s41591-024-02857-3) ↑ | [FM-SI](https://doi.org/10.1007/978-3-031-98688-8_2) ↓ |
+|-----------------------------------------------------|-----------------------------------------------------------|---------------------------------------------------------------|--------------------------------------------------------|
+| [CONCH](https://doi.org/10.1038/s41591-024-02856-4) | 85.17%                                                    | 72.37%                                                        | 0.0934                                                 |
+| [UNI](https://doi.org/10.1038/s41591-024-02857-3)   | 82.51%                                                    | 68.28%                                                        | 0.5867                                                 |
+| [TITAN](https://doi.org/10.48550/arXiv.2411.19666)  | -                                                         | 83.10%                                                        | 0.0331                                                 |
 
 
 
@@ -53,7 +55,7 @@ python main.py --folder <folder> --encoder <CONCH/UNI> --scenario <ABMIL/MISimpl
 
 We proposed the Foundation Model - Silhouette Index (FM-SI) to assess the model robustness against distribution shifts in terms of digitization scanner. FM-SI is based on t-SNE  dimensionality reduction and silhouette coefficients . It measures FM robustess at the slide-level without requiring class labels.
 
-To plot 2D t-SNE and get the FM-SI, you just need to add the corresponding flag to the execution. Script will not run the classification. 
+To plot 2D t-SNE and get the FM-SI, you just need to add the corresponding flag to the execution. Script will also plot the visualization with the class labels and will not run the classification. 
 
 ```
 python main.py --folder <folder> --encoder <CONCH/UNI> --get_fmsi

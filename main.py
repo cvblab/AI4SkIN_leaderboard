@@ -14,7 +14,7 @@ from utils.utils import set_random_seeds, plot_confmx, load_data, plot_figures, 
 
 parser = argparse.ArgumentParser(description="AI4SkIN leaderboard")
 parser.add_argument('--folder', type=str)
-parser.add_argument('--encoder', type=str, choices=["UNI", "CONCH"])
+parser.add_argument('--encoder', type=str, choices=["UNI", "CONCH", "TITAN"])
 parser.add_argument('--model', type=str, default=None, choices=["ABMIL", "MISimpleShot"])
 parser.add_argument('--get_fmsi', action='store_true')
 parser.add_argument('--lr', type=float, default=1e-4)
@@ -26,12 +26,12 @@ args = parser.parse_args()
 set_random_seeds(seed_value=args.seed)  # Reproducibility
 
 # Data loading
-X, Y, WSI, patients, centers = load_data(feature_extractor=args.encoder, folder=args.folder)
+X, Y, patients, centers, subtypes = load_data(feature_extractor=args.encoder, folder=args.folder)
 n_classes = len(np.unique(Y)) # Number of classes
 L = X[0].shape[-1] # Latent space length
 
 # Calculate FM-SI: Foundation Model - Silhoutte Index
-get_fmsi(X,centers,args.encoder) if args.get_fmsi else None
+get_fmsi(X, centers, subtypes, args.encoder) if args.get_fmsi else None
 
 run_name = args.model + "_" + args.encoder # Run name definition
 
@@ -60,6 +60,10 @@ for fold, (train_index, val_index) in enumerate(kf.split(np.zeros(len(Y)), Y, pa
         plot_confmx(val_cm_k, run_name_k, model=args.model, encoder=args.encoder)
         list_cm_val.append(val_cm_k)
         continue
+
+    if len(X_train_k[0].shape) == 1:
+        print("[WARNING]: MIL is not enabled for slide-FM")
+        exit(1)
 
     if args.model == "ABMIL":
         model = shABMIL(n_classes=n_classes, L=L).cuda() # Attention-based MIL
