@@ -13,20 +13,18 @@ _Authors_: [Pablo Meseguer<sup>1</sup>](https://scholar.google.es/citations?user
 In this work, we provide an extensive evaluation of histopathology foundation models in a benchmark for skin cancer subtyping on whole slide images (WSI) from the multi-center [AI4SKIN dataset](https://doi.org/10.1038/s41597-025-05108-3).
 The table provides the classification performance (balanced accuracy) for each combination of foundation model and multiple instance learning classifier. We include the Foundation Model - Silhouette Index (FM-SI) to measure model robustness against distribution shifts.
 
-
-| Foundation Model                                         | [ABMIL](https://proceedings.mlr.press/v80/ilse18a.html) ↑ | [MI-SimpleShot](https://doi.org/10.1038/s41591-024-02857-3) ↑ | [FM-SI](https://doi.org/10.1007/978-3-031-98688-8_2) ↓ |
-|----------------------------------------------------------|-----------------------------------------------------------|---------------------------------------------------------------|--------------------------------------------------------|
-| [CONCH](https://doi.org/10.1038/s41591-024-02856-4)      | 85.17%                                                    | 72.37%                                                        | 0.0934                                                 |
-| [KEEP](https://doi.org/10.48550/arXiv.2412.13126)        | 82.01%                                                    | 73.97%                                                        | 0.0617                                                 |
-| [UNI](https://doi.org/10.1038/s41591-024-02857-3)        | 82.51%                                                    | 68.28%                                                        | 0.5867                                                 |
-| [VIRCHOW-2](https://doi.org/10.48550/arXiv.2408.00738)   | 86.10%                                                    | 78.91%                                                        | 0.3479                                                 |
-| [PanDerm](https://doi.org/10.1038/s41591-025-03747-y)    | 75.15%                                                    | 56.38%                                                        | 0.5923                                                 |
-| [TITAN](https://doi.org/10.48550/arXiv.2411.19666)       | -                                                         | 83.10%                                                        | 0.0331                                                 |
-| [MADELEINE](https://doi.org/10.1007/978-3-031-73414-4_2) | -                                                         | 73.67%                                                        | 0.0774                                                 |
-| [CHIEF](https://doi.org/10.1038/s41586-024-07894-z)      | -                                                         | 58.97%                                                        | 0.1200                                                 |
-| [ResNet50IN](https://doi.org/10.1109/CVPR.2016.90)       | 66.97%                                                    | 53.12%                                                        | 0.6833                                                 |
-| [VGG16IN](https://doi.org/10.48550/arXiv.1409.1556)      | 53.42%                                                    | 49.44%                                                        | 0.4329                                                 |
-
+| Foundation Model                                         | [ABMIL](https://proceedings.mlr.press/v80/ilse18a.html) ↑ | [MI-SimpleShot](https://doi.org/10.1038/s41591-024-02857-3) ↑ | [FM-SI](https://doi.org/10.1007/978-3-031-98688-8_2) (ours) ↓ | [Robustness Index](https://doi.org/10.48550/arXiv.2501.18055) ↑ |
+|----------------------------------------------------------|-----------------------------------------------------------|---------------------------------------------------------------|---------------------------------------------------------------|-----------------------------------------------------------------|
+| [CONCH](https://doi.org/10.1038/s41591-024-02856-4)      | 85.17%                                                    | 72.37%                                                        | 0.0934                                                        | 0.8161                                                          |
+| [KEEP](https://doi.org/10.48550/arXiv.2412.13126)        | 82.01%                                                    | 73.97%                                                        | 0.0617                                                        | 0.8448                                                          |
+| [UNI](https://doi.org/10.1038/s41591-024-02857-3)        | 82.51%                                                    | 68.28%                                                        | 0.5867                                                        | 0.6258                                                          |
+| [VIRCHOW-2](https://doi.org/10.48550/arXiv.2408.00738)   | 86.10%                                                    | 78.91%                                                        | 0.3479                                                        | 0.7984                                                          |
+| [PanDerm](https://doi.org/10.1038/s41591-025-03747-y)    | 75.15%                                                    | 56.38%                                                        | 0.5923                                                        | 0.5418                                                          |
+| [TITAN](https://doi.org/10.48550/arXiv.2411.19666)       | -                                                         | 83.10%                                                        | 0.0331                                                        | 0.9714                                                          |
+| [MADELEINE](https://doi.org/10.1007/978-3-031-73414-4_2) | -                                                         | 73.67%                                                        | 0.0774                                                        | 0.9065                                                          |
+| [CHIEF](https://doi.org/10.1038/s41586-024-07894-z)      | -                                                         | 58.97%                                                        | 0.1200                                                        | 0.6943                                                          |
+| [ResNet50IN](https://doi.org/10.1109/CVPR.2016.90)       | 66.97%                                                    | 53.12%                                                        | 0.6833                                                        | 0.5148                                                          |
+| [VGG16IN](https://doi.org/10.48550/arXiv.1409.1556)      | 53.42%                                                    | 49.44%                                                        | 0.4329                                                        | 0.4975                                                          |
 
 
 > **Note**  
@@ -72,5 +70,5 @@ python main.py --folder <folder> --encoder <encoder> --get-fmsi
 
 - [x] Share embeddings of other foundation models
 - [x] Include slide-level foundation models (TITAN)
+- [x] Provide comparison of FM-SI with Robustness Index (RI)
 - [ ] Implement other MIL models (TransMIL)
-- [ ] Provide comparison of FM-SI with Robustness Index (RI)

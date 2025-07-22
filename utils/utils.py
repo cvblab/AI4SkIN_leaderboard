@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import torch
+from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.utils.class_weight import compute_class_weight
 from torch.optim import AdamW
 from torch.optim.lr_scheduler import CosineAnnealingLR
@@ -72,6 +73,17 @@ def get_hyperparams(lr, Y_train_k, epochs, model):
     criterion = torch.nn.CrossEntropyLoss(weight=class_weights, reduction="sum")
     return optimizer, criterion, scheduler
 
+def get_ri(X,centers,labels,k=20):
+    sim_mx = cosine_similarity(X)
+    num, den = 0.0, 0.0
+    for sim_mx_it, labels_it, centers_it in zip(sim_mx, labels, centers):
+        idx = np.argsort(sim_mx_it)[::-1][1:k + 1]
+        label, center = labels[idx], centers[idx]
+        num += np.sum(label == labels_it)
+        den += np.sum(center == centers_it)
+    ri = num / den
+    return ri
+
 def get_fmsi(X, centers, labels, encoder):
     from sklearn.manifold import TSNE
     from sklearn.metrics import silhouette_score
@@ -84,20 +96,22 @@ def get_fmsi(X, centers, labels, encoder):
     # Plot 2D Visualization
     fig, axs = plt.subplots(1, 2, figsize=(12, 6))  # 1 row, 2 columns
     identifiers = [labels, centers]
-    for ax, labels in zip(axs, identifiers):
-        for label in np.unique(labels):
-            indices = labels == label
+    for ax, id_it in zip(axs, identifiers):
+        for label in np.unique(id_it):
+            indices = id_it == label
             ax.scatter(X_2D[indices, 0], X_2D[indices, 1], label=str(label))
         ax.legend()
         ax.grid(True, zorder=0)
 
-    fmsi = round(silhouette_score(X_2D, centers), 4) # Calculate silhouette score
-    axs[1].set_title(f"FM-SI ({encoder}) = {fmsi:.4f}")
+    fmsi = silhouette_score(X_2D, centers) # Calculate silhouette score
+    ri = get_ri(X, centers, labels) # Calculate robusness index (RI)
+    axs[1].set_title(f"{encoder}: FM-SI = {fmsi:.4f} | RI = {ri:.4f}")
     plt.tight_layout()
 
     path_save = os.path.join("./local_data/tsne/")
     os.makedirs(path_save, exist_ok=True)
     plt.savefig(os.path.join(path_save, f"tsne_{encoder}.png"))
+    print("[INFO] 2D t-SNE plot saved")
     exit()
 
 def set_random_seeds(seed_value=42):
