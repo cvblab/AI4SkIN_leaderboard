@@ -13,7 +13,8 @@ from torch.optim.lr_scheduler import CosineAnnealingLR
 from tqdm import tqdm
 
 
-def plot_figures(train_acc_epoch,test_acc_epoch,train_loss_epoch, test_loss_epoch, run_name, model, encoder):
+def plot_figures(metrics, run_name, model, encoder):
+    train_acc_epoch, test_acc_epoch, train_loss_epoch, test_loss_epoch = metrics
     fig, axs = plt.subplots(2, 1, figsize=(8, 8), sharex=True)
 
     # Plotting training and testing losses

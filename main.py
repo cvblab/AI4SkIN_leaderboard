@@ -22,13 +22,11 @@ args = parser.parse_args()
 
 set_random_seeds(seed_value=args.seed)  # Reproducibility
 
-# Data loading
-X, Y, patients, centers, subtypes = load_data(encoder=args.encoder, folder=args.folder)
+X, Y, patients, centers, subtypes = load_data(encoder=args.encoder, folder=args.folder) # Data loading
 n_classes = len(np.unique(Y)) # Number of classes
 L = X[0].shape[-1] # Latent space length
 
-# Calculate FM-SI: Foundation Model - Silhoutte Index
-get_fmsi(X, centers, subtypes, args.encoder) if args.get_fmsi else None
+get_fmsi(X, centers, subtypes, args.encoder) if args.get_fmsi else None # Calculate FM-SI
 
 run_name = args.model + "_" + args.encoder # Run name definition
 
@@ -65,8 +63,7 @@ for fold, (train_index, val_index) in enumerate(kf.split(np.zeros(len(Y)), Y, pa
         model = shABMIL(n_classes=n_classes, L=L).cuda() # Attention-based MIL
         optimizer, criterion, scheduler = get_hyperparams(args.lr, Y_train_k, args.epochs, model)
         metrics = train_model(model, optimizer, criterion, scheduler, X_train_k, Y_train_k, X_val_k, Y_val_k, args.epochs, run_name_k)
-        train_acc_epoch, test_acc_epoch, train_loss_epoch, test_loss_epoch = metrics
-        plot_figures(train_acc_epoch, test_acc_epoch, train_loss_epoch, test_loss_epoch, run_name_k, args.model, args.encoder)
+        plot_figures(metrics, run_name_k, args.model, args.encoder)
         val_cm_k = validate_model(model, X_val_k, Y_val_k)
         plot_confmx(val_cm_k, run_name_k, model=args.model, encoder=args.encoder)
         list_cm_val.append(val_cm_k)
