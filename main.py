@@ -6,14 +6,14 @@ import torch
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import StratifiedGroupKFold
 
-from utils.models import shABMIL, MISimpleShot
+from utils.models import shABMIL, TransMIL, MISimpleShot
 from utils.trainer import train_model, validate_model
 from utils.utils import set_random_seeds, plot_confmx, load_data, plot_figures, get_fmsi, get_hyperparams
 
 parser = argparse.ArgumentParser(description="AI4SkIN leaderboard")
 parser.add_argument('--folder', type=str)
 parser.add_argument('--encoder', type=str)
-parser.add_argument('--model', type=str, default=None, choices=["ABMIL", "MISimpleShot"])
+parser.add_argument('--model', type=str, default=None, choices=["ABMIL", "TransMIL", "MISimpleShot"])
 parser.add_argument('--get-fmsi', action='store_true')
 parser.add_argument('--lr', type=float, default=1e-4)
 parser.add_argument('--epochs', type=int, default=20)
@@ -55,12 +55,17 @@ for fold, (train_index, val_index) in enumerate(kf.split(np.zeros(len(Y)), Y, pa
         plot_confmx(val_cm_k, run_name_k, model=args.model, encoder=args.encoder)
         list_cm_val.append(val_cm_k)
 
-    if args.model == "ABMIL":
+    else:
         if len(X_train_k[0].shape) == 1:
             print("[ERROR]: MIL is not enabled for slide-FM", file=sys.stderr)
             sys.exit(1)
 
-        model = shABMIL(n_classes=n_classes, L=L).cuda() # Attention-based MIL
+        # MIL model selection
+        if args.model == "ABMIL":
+            model = shABMIL(n_classes=n_classes, L=L).cuda() # Attention-based MIL
+        elif args.model == "TransMIL":
+            model = TransMIL(n_classes=n_classes, L=L).cuda() # Transformer-based MIL
+
         optimizer, criterion, scheduler = get_hyperparams(args.lr, Y_train_k, args.epochs, model)
         metrics = train_model(model, optimizer, criterion, scheduler, X_train_k, Y_train_k, X_val_k, Y_val_k, args.epochs, run_name_k)
         plot_figures(metrics, run_name_k, args.model, args.encoder)

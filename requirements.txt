@@ -3,3 +3,4 @@ pandas==2.2.2
 tqdm==4.66.2
 matplotlib==3.8.4
 seaborn==0.13.2
+nystrom-attention==0.0.11
