@@ -30,6 +30,20 @@ The table provides the classification performance (balanced accuracy) for each c
 > **Note**  
 > Results may vary from those presented in the paper as this repository uses the final version of the dataset containing 626 slides. We do not rely on the official partitions of the dataset as we used a patient-stratified 5-fold cross-validation. 
 
+### AI4SkIN dataset
+
+The following table presents a summary of the AI4SkIN dataset inidicanting the number of WSI in each skin cancer subtype for each center. 
+
+| **Subtype**            | **Abb.** | **HUSC**  | **HCUV**  | **Overall** |
+|------------------------|----------|-----------|-----------|-------------|
+| Leiomyoma              | lm       | 73        | 31        | 104         |
+| Leiomyosarcoma         | lms      | 23        | 23        | 46          |
+| Dermatofibroma         | df       | 93        | 102       | 195         |
+| Dermatofibrosarcoma    | dfs      | 36        | 21        | 57          |
+| Spindle cell melanoma  | scm      | 74        | 48        | 122         |
+| Atypical fibroxhantoma | afx      | 74        | 44        | 102         |
+| **Overall**            |          | 357 (57%) | 269 (43%) | **626**     | 
+
 ### Setting up AI4SKIN leaderboard
 
 Clone repository and intall a compatible torch version with your GPU and required libraries.
