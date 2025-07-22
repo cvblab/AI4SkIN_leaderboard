@@ -50,7 +50,7 @@ From [this link](https://upvedues-my.sharepoint.com/:f:/g/personal/pabmees_upv_e
 
 Run weakly supervised classification based on multiple instance learning (MIL) for skin cancer subtyping. We implement attention-based MIL and MI-SimpleShot. The folder argument should point to the directory containing subfolders named as each FM.
 ```
-python main.py --folder <folder> --encoder <encoder> --scenario <ABMIL/MISimpleShot>
+python main.py --folder <folder> --encoder <encoder> --model <ABMIL/MISimpleShot>
 ```
 
 * FM-SI: Foundation Model - Silhouette Index

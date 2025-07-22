@@ -6,6 +6,9 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import torch
+from sklearn.utils.class_weight import compute_class_weight
+from torch.optim import AdamW
+from torch.optim.lr_scheduler import CosineAnnealingLR
 from tqdm import tqdm
 
 
@@ -60,6 +63,14 @@ def load_data(folder, encoder):
 
     data = [np.load(os.path.join(folder, encoder, file_name + ".npy")) for file_name in tqdm(list_WSI)]
     return data, labels, patients, centers, subtypes
+
+def get_hyperparams(lr, Y_train_k, epochs, model):
+    optimizer = AdamW(model.parameters(), lr=lr, betas=(0.9, 0.999), weight_decay=1e-5)
+    scheduler = CosineAnnealingLR(optimizer, T_max=epochs)
+    class_weights = compute_class_weight('balanced', classes=np.unique(Y_train_k), y=Y_train_k)
+    class_weights = torch.tensor(class_weights, dtype=torch.float32).cuda()
+    criterion = torch.nn.CrossEntropyLoss(weight=class_weights, reduction="sum")
+    return optimizer, criterion, scheduler
 
 def get_fmsi(X, centers, labels, encoder):
     from sklearn.manifold import TSNE
