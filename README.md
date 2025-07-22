@@ -41,7 +41,7 @@ The following table presents a summary of the AI4SkIN dataset inidicanting the n
 | Dermatofibroma         | df       | 93        | 102       | 195         |
 | Dermatofibrosarcoma    | dfs      | 36        | 21        | 57          |
 | Spindle cell melanoma  | scm      | 74        | 48        | 122         |
-| Atypical fibroxhantoma | afx      | 74        | 44        | 102         |
+| Atypical fibroxhantoma | afx      | 58        | 44        | 102         |
 | **Overall**            |          | 357 (57%) | 269 (43%) | **626**     | 
 
 ### Setting up AI4SKIN leaderboard
