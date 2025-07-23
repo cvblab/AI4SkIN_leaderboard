@@ -37,8 +37,8 @@ The table provides the classification performance (balanced accuracy) for each c
 | [EfficentNetB0IN](https://doi.org/10.48550/arXiv.1905.11946) | 61.31%                                                    |                                                         | 52.98%                                                        | 0.5807                                                        | 0.5144                                                          |
 
 <p align="center">
-  <img src="assets/performance_metrics.png" alt="Imagen 1" height="200"/>
-  <img src="assets/shift_metrics.png" alt="Imagen 2" height="200"/>
+  <img src="assets/performance_metrics.png" alt="Imagen 1" height="225"/>
+  <img src="assets/shift_metrics.png" alt="Imagen 2" height="225"/>
 </p>
 
 > **Note**  
