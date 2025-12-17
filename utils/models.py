@@ -3,6 +3,31 @@ import torch
 import torch.nn as nn
 from nystrom_attention import NystromAttention
 
+def get_ML_clf(classifier, seed):
+    if args.model == "LR":
+        from sklearn.linear_model import LogisticRegression
+        clf = LogisticRegression(C=1, max_iter=10000, random_state=seed, class_weight='balanced')
+
+    elif classifier == "TabPFN":
+        from tabpfn import TabPFNClassifier
+        clf = TabPFNClassifier(device=device, ignore_pretraining_limits=True)
+
+    elif classifier == "RF":
+        from sklearn.ensemble import RandomForestClassifier
+        clf = RandomForestClassifier(random_state=seed, class_weight='balanced')
+
+    elif classifier == "SVM":
+        from sklearn.svm import SVC
+        clf = SVC(random_state=seed, class_weight='balanced', probability=True)
+
+    elif classifier == "XGB":
+        from xgboost import XGBClassifier
+        clf = XGBClassifier(random_state=seed, eval_metric="logloss", use_label_encoder=False)
+
+    elif classifier == "MLP":
+        from sklearn.linear_model import SGDClassifier
+        clf = SGDClassifier(loss="perceptron", max_iter=10000, random_state=seed, class_weight="balanced")
+    return clf
 
 def MISimpleShot(X_train_k, Y_train_k):
     prompt_classifier = []
