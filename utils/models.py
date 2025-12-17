@@ -4,13 +4,13 @@ import torch.nn as nn
 from nystrom_attention import NystromAttention
 
 def get_ML_clf(classifier, seed):
-    if args.model == "LR":
+    if classifier == "LR":
         from sklearn.linear_model import LogisticRegression
         clf = LogisticRegression(C=1, max_iter=10000, random_state=seed, class_weight='balanced')
 
     elif classifier == "TabPFN":
         from tabpfn import TabPFNClassifier
-        clf = TabPFNClassifier(device=device, ignore_pretraining_limits=True)
+        clf = TabPFNClassifier(device="cuda", ignore_pretraining_limits=True)
 
     elif classifier == "RF":
         from sklearn.ensemble import RandomForestClassifier
