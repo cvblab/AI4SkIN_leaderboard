@@ -57,14 +57,15 @@ def load_data(folder, encoder):
     subtypes = dataframe['subtype'].values
     patients = dataframe['patient'].values
     centers = dataframe['center'].values
+    folds = dataframe['fold'].values
 
     if not os.path.exists(os.path.join(folder, encoder)):
         import sys
         print(f"[ERROR] Encoder {encoder} is not available", file=sys.stderr)
         sys.exit(1)
 
-    data = [np.load(os.path.join(folder, encoder, file_name + ".npy")) for file_name in tqdm(list_WSI)]
-    return data, labels, patients, centers, subtypes
+    data = [np.load(os.path.join(folder, encoder, f"{file_name}.npy")) for file_name in tqdm(list_WSI)]
+    return data, labels, patients, centers, subtypes, folds
 
 def get_hyperparams(lr, Y_train_k, epochs, model):
     optimizer = AdamW(model.parameters(), lr=lr, betas=(0.9, 0.999), weight_decay=1e-5)

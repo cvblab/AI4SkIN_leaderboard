@@ -24,19 +24,19 @@ run_name = f"{args.model}_{args.encoder}" # Run name definition
 print(f"[INFO] Running experiment: {run_name}")
 device = "cuda" if torch.cuda.is_available() else "cpu" # Device
 
-X, Y, patients, centers, subtypes = load_data(encoder=args.encoder, folder=args.folder) # Data loading
+X, Y, patients, centers, subtypes, folds = load_data(encoder=args.encoder, folder=args.folder) # Data loading
 n_classes = len(np.unique(Y)) # Number of classes
 L = X[0].shape[-1] # Latent space length
 
 get_fmsi(X, centers, subtypes, args.encoder) if args.get_fmsi else None # Calculate FM-SI and plot 2D TSNE
 
 # Data partitioning (patient-level stratified k-fold cross validation)
-kf = StratifiedGroupKFold(n_splits=5, shuffle=True, random_state=args.seed)
 list_cm_val = []
-for fold, (train_index, val_index) in enumerate(kf.split(np.zeros(len(Y)), Y, patients)):
+for fold in np.unique(folds):
     print("################################# K = " + str(fold) + " #################################")
     run_name_k = f"{run_name}_k{fold}"
 
+    train_index, val_index = np.where(folds!=fold)[0], np.where(folds==fold)[0]
     X_train_k, X_val_k = [X[i] for i in train_index], [X[i] for i in val_index]
     Y_train_k, Y_val_k = Y[train_index], Y[val_index]
 
