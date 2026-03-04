@@ -4,7 +4,6 @@ import sys
 import numpy as np
 import torch
 from sklearn.metrics import confusion_matrix
-from sklearn.model_selection import StratifiedGroupKFold
 
 from utils.utils import set_random_seeds, plot_confmx, load_data, plot_figures, get_fmsi, get_hyperparams
 
